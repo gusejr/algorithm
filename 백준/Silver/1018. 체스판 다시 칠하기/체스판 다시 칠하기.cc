@@ -25,18 +25,10 @@ int main() {
         cin >> board;
         board_color.push_back(board);
     }
-    for (int z = 0; z < N; z++)  // 전체 행
+    for (int z = 0; z +8 <= N; z++)  // 전체 행
     {
-        if (z + 8 > N)  // 전체 행 초과
+        for (int k = 0; k + 8 <= M; k++) //전체 열
         {
-            break;
-        }
-        for (int k = 0; k < M; k++) //전체 열
-        {
-            if (k + 8 > M)  // 전체 열 초과
-            {
-                break;
-            }
             for (int i = z; i < z + 8; i++) // 행 8*8
             {
                 for (int j = k; j < k + 8; j++) // 열 8*8
