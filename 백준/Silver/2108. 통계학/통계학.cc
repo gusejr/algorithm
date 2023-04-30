@@ -18,9 +18,10 @@ int main() {
 	ios::sync_with_stdio(false);
 	cin.tie(nullptr);
 	cout.tie(nullptr);
-	int N, median = 0, mode = 0, range = 0; // 산술평균, 중앙값, 최빈값, 법위
-	double arithmetic_mean = 0, number; // N 홀수 입력, number -> -4000 ~ 4000
-	vector<int> save, count_num(8001, 0);
+	int mode, range; // 최빈값,범위
+	int number, N;  // number -> -4000 ~ 4000, N 홀수 입력
+	vector<int> save;
+	vector<int>	count_num(8001, 0);
 	vector<pair<int, int>> save_mode;
 	cin >> N;
 	for (int i = 0; i < N; i++)
@@ -35,21 +36,12 @@ int main() {
 		total = total + save[i];
 		count_num[save[i] + 4000]++; // 동일한 숫자 카운트
 	}
-	arithmetic_mean = round(total / save.size());  // 산술평균
+	double arithmetic_mean = round(total / save.size());  // 산술평균
 	if (arithmetic_mean == -0)
 	{
 		arithmetic_mean = abs(arithmetic_mean);
 	}
-	if (N != 1)  // 중앙값
-	{
-		median = N /2;
-		median = save[median];
-	}
-	else
-	{
-		median = save[0];
-	}
-	int max_count = 0, max_count_num = 0;
+	int median = save[N / 2]; // 중앙값
 	for (int i = 0; i < 8001; i++)
 	{
 		if (count_num[i] != 0)
@@ -58,11 +50,7 @@ int main() {
 		}
 	}
 	sort(save_mode.begin(), save_mode.end(), sort_num);
-	if (N == 1)
-	{
-		mode = save_mode[0].second - 4000;
-	}
-	else if (save_mode[0].first == save_mode[1].first)
+	if (save_mode[0].first == save_mode[1].first && N != 1)
 	{
 		mode = save_mode[1].second - 4000;
 	}
@@ -70,13 +58,6 @@ int main() {
 	{
 		mode = save_mode[0].second - 4000;
 	}
-	if (N != 1)
-	{
-		range = save[N - 1] - save[0];  // 범위
-	}
-	else
-	{
-		range = 0;
-	}
-	cout << arithmetic_mean << '\n' << median << '\n'<< mode << '\n' << abs(range);  // 산술평균 중앙값 최빈값 범위
+	range = save[N - 1] - save[0];  // 범위
+	cout << arithmetic_mean << '\n' << median << '\n'<< mode << '\n' << range;  // 산술평균 중앙값 최빈값 범위
 }
