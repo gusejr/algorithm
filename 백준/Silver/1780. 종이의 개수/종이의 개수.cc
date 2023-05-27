@@ -5,49 +5,39 @@
 
 using namespace std;
 vector<vector<int>> paper;
-int minus_paper = 0, zero_paper = 0, one_paper = 0;
+int total_count[3] = { 0 };
 
-void solve(int area, int row, int column)  // 한 변의 길이, 해당 구역의 첫번째 행, 해당 구역의 첫번째 열
-{// 해당 구역의 종이가 모두 같은지 확인
-    int count_minus_one = 0, count_zero = 0, count_one = 0;
-    int count = 0;
+bool is_all_same_paper(int row, int column, int area)
+{
     for (int i = row; i < row + area; i++)
     {
         for (int j = column; j < column + area; j++)
         {
-            if (paper[i][j] == -1)
+            if (paper[row][column] != paper[i][j])
             {
-                count_minus_one++;
-            }
-            else if (paper[i][j] == 0)
-            {
-                count_zero++;
-            }
-            else
-            {
-                count_one++;
+                return false;
             }
         }
     }
-    if (area * area == count_minus_one || area * area == count_zero || area * area == count_one)
+    return true;
+}
+void solve(int area, int row, int column)  // 한 변의 길이, 해당 구역의 첫번째 행, 해당 구역의 첫번째 열
+{// 해당 구역의 종이가 모두 같은지 확인
+    int count = 0;
+    
+    if (is_all_same_paper(row, column, area))
     {// 해당 구역의 숫자가 모두 같을 경우
-        minus_paper += count_minus_one / (area * area);
-        zero_paper += count_zero / (area * area);
-        one_paper += count_one / (area * area);
+        total_count[paper[row][column] + 1]++;
         return;
     }
     int plus = area / 3;
-    solve(area / 3, row, column);
-    solve(area / 3, row, column + plus);
-    solve(area / 3, row, column + plus * 2);
-
-    solve(area / 3, row + plus, column);
-    solve(area / 3, row + plus, column + plus);
-    solve(area / 3, row + plus, column + plus * 2);
-
-    solve(area / 3, row + plus * 2, column);
-    solve(area / 3, row + plus * 2, column + plus);
-    solve(area / 3, row + plus * 2, column + plus * 2);
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            solve(plus, row + plus * i, column + plus * j);
+        }
+    }
 }
 int main() {
     ios::sync_with_stdio(false);
@@ -67,7 +57,7 @@ int main() {
         paper.push_back(v);
     }
     solve(N, 0, 0);
-    cout << minus_paper << '\n';
-    cout << zero_paper << '\n';
-    cout << one_paper << '\n';
+    cout << total_count[0] << '\n';
+    cout << total_count[1] << '\n';
+    cout << total_count[2] << '\n';
 }
