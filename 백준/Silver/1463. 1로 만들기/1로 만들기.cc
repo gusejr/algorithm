@@ -22,11 +22,11 @@ int main() {
     {
         if (i % 3 == 0)
         {
-            dp[i] = min(dp[i / 3] + 1, min(dp[i - 1] + 1, dp[i]));
+            dp[i] = min(dp[i / 3] + 1, dp[i]);
         }
         if (i % 2 == 0)
         {
-            dp[i] = min(dp[i / 2] + 1, min(dp[i - 1] + 1, dp[i]));
+            dp[i] = min(dp[i / 2] + 1, dp[i]);
         }
 
         dp[i] = min(dp[i - 1] + 1, dp[i]);
