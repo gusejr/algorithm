@@ -7,7 +7,6 @@
 #include <cmath>
 
 using namespace std;
-int dp[31][31] = { 0 };
 
 int main() {
     ios::sync_with_stdio(false);
@@ -19,7 +18,7 @@ int main() {
     cin >> T;
     for (int i = 0; i < T; i++)
     {
-        dp[31][31] = { 0 };
+        int dp[31][31] = { 0 };
         cin >> west_point >> east_point;
         for (int j = 1; j <= east_point; j++)
         {
